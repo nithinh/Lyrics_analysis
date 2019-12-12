@@ -31,7 +31,9 @@ def genre_count(groups, n):
 
 
 def word_cloud(groups):
+    plt.figure()
     for i, genre in groups:
+        plt.subplot(2, 3, i+1)
         # print(genre)
         songs = genre["preprocessed_lyrics"].values
         words = []
@@ -44,7 +46,7 @@ def word_cloud(groups):
         for index, (word, count) in enumerate(Counter(words).most_common(45)):
             if index > 15:
                 cloud_dict[word] = count
-        print(cloud_dict)
+        # print(cloud_dict)
         plt.style.use('seaborn')
         wc = WordCloud(
             scale=2,
@@ -56,9 +58,9 @@ def word_cloud(groups):
 
         plt.imshow(wc, interpolation='bilinear')
         plt.axis('off')
-        plt.tight_layout()
-        # plt.savefig('graphs/top15-45_genre_'+str(i)+'.png', dpi=200)
-        plt.show()
+    plt.tight_layout()
+    plt.savefig('graphs/word_clouds_top15-45.png', dpi=200)
+    plt.show()
 
 
 if __name__== "__main__":
@@ -69,7 +71,7 @@ if __name__== "__main__":
     n_genres = 6
 
     # Count the entries of each genre and plot
-    genre_count(groups, n_genres)
+    # genre_count(groups, n_genres)
 
     # Creating word cloud for each genre
     word_cloud(groups)
